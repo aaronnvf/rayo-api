@@ -1,4 +1,5 @@
 export default async function handler(req, res) {
+
   try {
 
     const response = await fetch(
@@ -7,14 +8,20 @@ export default async function handler(req, res) {
 
     const data = await response.json();
 
-    res.status(200).json(data);
+    const clasificacion = data.stages[0].leagueClassification;
+
+    res.status(200).json({
+      teams: data.teams,
+      classification: clasificacion
+    });
 
   } catch (error) {
 
     res.status(500).json({
-      error: "Error al obtener datos",
+      error: "Error cargando clasificación",
       detalle: error.toString()
     });
 
   }
+
 }
