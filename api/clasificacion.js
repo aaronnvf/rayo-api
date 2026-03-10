@@ -5,7 +5,7 @@ try {
 const equiposRes = await fetch("https://futbol7amistad.com/api/tournaments/191");
 const equiposData = await equiposRes.json();
 
-const partidosRes = await fetch("https://futbol7amistad.com/api/tournaments/191/filterMatchesByDatesRange");
+const partidosRes = await fetch("https://futbol7amistad.com/api/tournaments/191/matches");
 const partidosData = await partidosRes.json();
 
 res.setHeader("Access-Control-Allow-Origin", "*");
@@ -16,6 +16,8 @@ matches: partidosData
 });
 
 } catch (error) {
+
+console.log(error);
 
 res.status(500).json({ error: "Error cargando datos" });
 
