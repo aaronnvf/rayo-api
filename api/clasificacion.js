@@ -1,31 +1,18 @@
 export default async function handler(req, res) {
 
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+const response = await fetch("https://futbol7amistad.com/api/tournaments/191");
 
-  try {
+const data = await response.json();
 
-    const response = await fetch(
-      "https://futbol7amistad.com/api/tournaments/191?tab=classification&stage=0"
-    );
+const clasificacion = data.classification;
 
-    const data = await response.json();
+const equipos = data.teams;
 
-    const clasificacion = data.stages[0].leagueClassification;
+res.setHeader("Access-Control-Allow-Origin", "*");
 
-    res.status(200).json({
-      teams: data.teams,
-      classification: clasificacion
-    });
-
-  } catch (error) {
-
-    res.status(500).json({
-      error: "Error cargando clasificación",
-      detalle: error.toString()
-    });
-
-  }
+res.status(200).json({
+classification: clasificacion,
+teams: equipos
+});
 
 }
